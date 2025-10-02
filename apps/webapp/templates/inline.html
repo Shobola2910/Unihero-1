@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="card" style="margin-bottom:14px;">
+    <h3>Inline blocks</h3>
+    <div class="footer-note">This page lists all inline texts you can reuse in the bots.</div>
+  </div>
+  <div class="card">
+    <table class="table">
+      <thead><tr><th>ID</th><th>Key</th><th>Language</th><th>Text</th><th>Created</th></tr></thead>
+      <tbody>
+        {% for b in blocks %}
+          <tr>
+            <td>{{ b.id }}</td>
+            <td>{{ b.key }}</td>
+            <td>{{ b.lang }}</td>
+            <td>{{ b.text }}</td>
+            <td>{{ b.created_at }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

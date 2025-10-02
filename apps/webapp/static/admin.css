@@ -1,0 +1,101 @@
+:root{
+  --bg:#0d1320;
+  --card:#141b2d;
+  --text:#e5e9f5;
+  --muted:#a6b0cf;
+  --accent:#3b5bfd;
+  --accent2:#6a8bff;
+  --border:#2a3550;
+  --danger:#ff5577;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+  background: radial-gradient(1100px 420px at 50% -220px, #1a2440 0%, var(--bg) 60%) fixed;
+  color:var(--text);
+}
+
+.topbar{
+  position:sticky; top:0; z-index:10;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 18px; background:rgba(13,19,32,.8);
+  backdrop-filter: blur(6px); border-bottom:1px solid var(--border);
+}
+.topbar .left{display:flex; gap:10px}
+.nav a{color:var(--muted); margin:0 10px; text-decoration:none}
+.nav a:hover{color:#fff}
+.nav a.logout{color:#ff95a4}
+
+.page{max-width:1200px; margin:28px auto; padding:0 18px}
+
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; cursor:pointer; border-radius:10px; border:1px solid transparent}
+.btn.sm{padding:6px 10px; font-size:14px}
+.btn.primary{padding:10px 14px; background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#fff; border:0}
+.btn.primary.w100{width:100%}
+.btn.ghost{padding:8px 12px; background:transparent; color:var(--text); border:1px solid var(--border)}
+.btn.ghost:hover{border-color:var(--accent)}
+.btn.outline{padding:8px 12px; background:transparent; color:#cfd6ff; border:1px solid var(--accent)}
+.btn.outline:hover{background:linear-gradient(90deg, var(--accent), var(--accent2)); color:#fff; border-color:transparent}
+
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  border:1px solid var(--border); border-radius:14px; padding:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.35); margin-bottom:18px;
+}
+
+.grid.kpis{display:grid; grid-template-columns:repeat(4,minmax(180px,1fr)); gap:16px}
+.grid.two{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+@media (max-width:1000px){.grid.kpis{grid-template-columns:1fr 1fr}.grid.two{grid-template-columns:1fr}}
+
+.kpi-title{color:var(--muted); font-size:14px}
+.kpi-num{font-size:40px; font-weight:700; margin:10px 0 4px}
+.link{color:#c9d2ff; text-decoration:none}
+.link:hover{text-decoration:underline}
+
+.auth-card{max-width:420px; margin:60px auto; padding:22px; border-radius:16px; background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid var(--border); box-shadow:0 20px 40px rgba(0,0,0,.45)}
+.auth-card h2{margin:0 0 14px}
+.alert.error{background:#3a0b18; border:1px solid #81263b; color:#ffd1db; padding:10px 12px; border-radius:10px; margin-bottom:12px}
+
+.form{display:flex; flex-direction:column; gap:8px}
+.form input, .form textarea, .form select{
+  background:#0f1525; border:1px solid var(--border); border-radius:10px; padding:10px 12px; color:#e9eeff
+}
+.form textarea{resize:vertical}
+
+.tbl{width:100%; border-collapse:collapse}
+.tbl th, .tbl td{padding:10px 8px; border-bottom:1px solid var(--border); text-align:left; color:#e8ecff}
+.tbl th{color:#b9c3e8; font-weight:600}
+.inline{display:flex; gap:8px; align-items:center}
+.badge{padding:4px 8px; border-radius:10px; background:#12223f; border:1px solid var(--border)}
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f9;
+    padding: 20px;
+}
+
+#dashboard {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+#userChart {
+    width: 100%;
+    height: 300px;
+    margin-top: 20px;
+}
+/* Optional: if you keep a separate admin.css; otherwise style.css covers it */
+:root{
+  --bg:#0d1320; --card:#141b2d; --text:#e5e9f5; --muted:#a6b0cf;
+  --accent:#3b5bfd; --accent2:#6a8bff; --border:#2a3550; --danger:#ff5577;
+}

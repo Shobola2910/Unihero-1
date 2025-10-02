@@ -1,0 +1,76 @@
+# -*- coding: utf-8 -*-
+import asyncio
+from aiogram import Bot, Dispatcher, F
+from aiogram.client.default import DefaultBotProperties
+from aiogram.enums import ParseMode
+from aiogram.filters import Command
+from aiogram.types import Message, CallbackQuery
+
+from apps.shared.config import SETTINGS
+from apps.shared.db import get_session, init_db, User, Payment, UserStatus, PaymentStatus
+from apps.shared.keyboards import approve_reject_kb
+
+print("Admin bot is running...")
+
+BOT = Bot(SETTINGS.ADMIN_BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+dp = Dispatcher()
+ADMIN_IDS = set()  # xohlasangiz ID lar qo‘ying
+
+def admin_only(handler):
+    async def wrapper(event, *args, **kwargs):
+        if ADMIN_IDS and getattr(event.from_user, "id", 0) not in ADMIN_IDS:
+            if isinstance(event, Message):
+                await event.answer("⛔️ Ruxsat yo‘q.")
+            return
+        return await handler(event, *args, **kwargs)
+    return wrapper
+
+@dp.message(Command("start"))
+@admin_only
+async def start(m: Message):
+    s = get_session()
+    pend = s.query(User).filter(User.status == UserStatus.pending).count()
+    payp = s.query(Payment).filter(Payment.status == PaymentStatus.pending).count()
+    await m.answer(f"Admin bot: pending users — {pend}, pending payments — {payp}")
+
+@dp.message(Command("pending"))
+@admin_only
+async def pending(m: Message):
+    s = get_session()
+    users = s.query(User).filter(User.status == UserStatus.pending).all()
+    if not users:
+        await m.answer("Pending users yo‘q.")
+        return
+    for u in users[:20]:
+        await m.answer(f"#{u.id} — {u.first_last} (@{u.username})\nApprove qilinsinmi?", reply_markup=approve_reject_kb(u.id))
+
+@dp.callback_query(F.data.startswith("adm:approve:"))
+@admin_only
+async def approve(cq: CallbackQuery):
+    uid = int(cq.data.split(":")[-1])
+    s = get_session()
+    u = s.query(User).get(uid)
+    if u:
+        u.status = UserStatus.approved; s.commit()
+        await cq.message.edit_text(f"✅ Approved: #{u.id} — {u.first_last}")
+    else:
+        await cq.answer("Topilmadi.")
+
+@dp.callback_query(F.data.startswith("adm:reject:"))
+@admin_only
+async def reject(cq: CallbackQuery):
+    uid = int(cq.data.split(":")[-1])
+    s = get_session()
+    u = s.query(User).get(uid)
+    if u:
+        u.status = UserStatus.rejected; s.commit()
+        await cq.message.edit_text(f"❌ Rejected: #{u.id} — {u.first_last}")
+    else:
+        await cq.answer("Topilmadi.")
+
+async def main():
+    init_db()
+    await dp.start_polling(BOT)
+
+if __name__ == "__main__":
+    asyncio.run(main())

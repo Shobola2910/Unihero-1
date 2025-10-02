@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>CMS — Inline blocks</h1>
+<form method="get" class="toolbar">
+  <select name="lang">
+    <option value="uz" {{ 'selected' if lang=='uz' else '' }}>UZ</option>
+    <option value="en" {{ 'selected' if lang=='en' else '' }}>EN</option>
+    <option value="ru" {{ 'selected' if lang=='ru' else '' }}>RU</option>
+  </select>
+  <input type="text" name="q" placeholder="Search key/title/body…" value="{{ q }}">
+  <button>Filter</button>
+  <a class="btn" href="/inline/new?lang={{ lang }}">+ New</a>
+</form>
+
+<div class="table">
+  <div class="row head">
+    <div>ID</div><div>Key</div><div>Lang</div><div>Title</div><div>Updated</div><div>Action</div>
+  </div>
+  {% for it in items %}
+  <div class="row">
+    <div>{{ it.id }}</div>
+    <div>{{ it.key }}</div>
+    <div>{{ it.lang }}</div>
+    <div>{{ it.title or '—' }}</div>
+    <div>{{ it.updated_at }}</div>
+    <div>
+      <a class="btn small" href="/inline/{{ it.id }}/edit">Edit</a>
+      <form method="post" action="/inline/{{ it.id }}/delete" style="display:inline">
+        <button class="btn small warn" onclick="return confirm('Delete?')">Delete</button>
+      </form>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% if not items %}<p>No items.</p>{% endif %}
+{% endblock %}

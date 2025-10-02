@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ 'Edit block' if item else 'Create block' }}</h1>
+<form method="post" action="/inline/save" class="card">
+  {% if item %}<input type="hidden" name="id" value="{{ item.id }}">{% endif %}
+  <label>Key</label>
+  <input name="key" required value="{{ item.key if item else '' }}" placeholder="news, motivation_1, rules...">
+  <div class="row2">
+    <div>
+      <label>Lang</label>
+      <select name="lang">
+        {% set lg = item.lang if item else lang %}
+        <option value="uz" {{ 'selected' if lg=='uz' else '' }}>UZ</option>
+        <option value="en" {{ 'selected' if lg=='en' else '' }}>EN</option>
+        <option value="ru" {{ 'selected' if lg=='ru' else '' }}>RU</option>
+      </select>
+    </div>
+    <div>
+      <label>Title</label>
+      <input name="title" value="{{ item.title if item else '' }}">
+    </div>
+  </div>
+  <label>Body</label>
+  <textarea name="body" rows="12" placeholder="HTML is allowed">{{ item.body if item else '' }}</textarea>
+  <div class="actions">
+    <button class="btn">Save</button>
+    <a class="btn ghost" href="/inline">Cancel</a>
+  </div>
+</form>
+{% endblock %}

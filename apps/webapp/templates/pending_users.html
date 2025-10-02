@@ -1,0 +1,19 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" href="/static/style.css"/><title>Pending users</title></head>
+<body class="page">
+<header><h1>Pending users</h1><nav><a href="/admin/dashboard">Dashboard</a><a href="/logout">Logout</a></nav></header>
+<main>
+<table class="tbl"><thead><tr><th>ID</th><th>Name</th><th>TG</th><th>Action</th></tr></thead>
+<tbody>
+{% for u in users %}
+<tr>
+  <td>{{ u.id }}</td><td>{{ u.full_name or '-' }}</td><td>{{ u.telegram_id }}</td>
+  <td>
+    <form method="post" action="/admin/user/{{u.id}}/approve" style="display:inline"><button class="ok" type="submit">Approve</button></form>
+    <form method="post" action="/admin/user/{{u.id}}/reject"  style="display:inline"><button class="no" type="submit">Reject</button></form>
+  </td>
+</tr>
+{% endfor %}
+</tbody></table>
+</main></body></html>

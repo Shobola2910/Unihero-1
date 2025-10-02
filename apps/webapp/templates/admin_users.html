@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="page-title">Users</h2>
+<div class="table">
+  <div class="tr head">
+    <div>ID</div><div>Full name</div><div>Username</div><div>Phone</div><div>Status</div>
+  </div>
+  {% for u in rows %}
+    <div class="tr">
+      <div>{{ u.id }}</div>
+      <div>{{ u.fullname or "-" }}</div>
+      <div>{{ u.username or "-" }}</div>
+      <div>{{ u.phone or "-" }}</div>
+      <div>{{ u.status or "-" }}</div>
+    </div>
+  {% else %}
+    <div class="empty">No users yet.</div>
+  {% endfor %}
+</div>
+{% endblock %}

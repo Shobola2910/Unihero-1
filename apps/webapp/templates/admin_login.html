@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="auth-wrap">
+  <form class="card auth-card" method="post" action="/admin">
+    <h1 class="card-title">UniHero Admin</h1>
+
+    {% if error %}
+      <div class="alert alert-error">❌ {{ error }}</div>
+    {% endif %}
+
+    <label class="label">Username</label>
+    <input class="input" type="text" name="username" placeholder="admin" required>
+
+    <label class="label">Password</label>
+    <input class="input" type="password" name="password" placeholder="••••••••" required>
+
+    <button class="btn primary w100" type="submit">Sign in</button>
+  </form>
+</div>
+{% endblock %}

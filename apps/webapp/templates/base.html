@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>UniHero</title>
+  <link rel="stylesheet" href="/static/app.css"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <a class="brand" href="/">UniHero</a>
+      <nav class="menu">
+        {% if request.session.get('uid') %}
+          <a class="btn secondary" href="/dashboard">Dashboard</a>
+          <a class="btn danger" href="/logout">Logout</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <small>© {{ now().year if now else "" }} UniHero — For Students, By Students</small>
+    </div>
+  </footer>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

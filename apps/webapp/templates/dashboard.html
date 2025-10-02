@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="grid">
+  <div class="card">
+    <h2 class="card-title">Profile</h2>
+    <div class="kv">
+      <div>ID</div><div>#{{ user.id }}</div>
+      <div>Telegram</div><div>{{ user.full_name or "-" }}{% if user.username %} (@{{ user.username }}){% endif %}</div>
+      <div>Language</div><div>{{ user.lang|upper }}</div>
+      <div>Status</div><div>{{ user.status.value if user.status else "pending" }}</div>
+    </div>
+
+    <form action="/lang" method="post" class="lang-form">
+      <label for="lang">Change language</label>
+      <select name="lang" id="lang">
+        <option value="uz" {{ "selected" if user.lang=="uz" }}>🇺🇿 UZB</option>
+        <option value="en" {{ "selected" if user.lang=="en" }}>🇬🇧 ENG</option>
+        <option value="ru" {{ "selected" if user.lang=="ru" }}>🇷🇺 RUS</option>
+      </select>
+      <button class="btn secondary" type="submit">Save</button>
+    </form>
+
+    {% if deeplink %}
+      <div class="hint">
+        <strong>Link your bot:</strong><br/>
+        <a class="btn link" href="{{ deeplink }}" target="_blank">Open in Telegram</a>
+        <p class="muted">We use a secure deep-link to connect your web and bot sessions.</p>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <h2 class="card-title">Quick Blocks</h2>
+    <div class="blocks">
+      {% for b in blocks %}
+        <details class="block">
+          <summary>{{ b.title }}</summary>
+          <div class="block-body">
+            <pre>{{ b.body_uz if user.lang=="uz" else (b.body_en if user.lang=="en" else b.body_ru) }}</pre>
+          </div>
+        </details>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="card-title">Payments</h2>
+    {% if payments %}
+      <table class="table">
+        <thead>
+          <tr><th>#</th><th>Plan</th><th>Overnight</th><th>Amount</th><th>Status</th><th>Created</th></tr>
+        </thead>
+        <tbody>
+          {% for p in payments %}
+            <tr>
+              <td>{{ p.id }}</td>
+              <td>{{ p.plan or "-" }}</td>
+              <td>{{ "Yes" if p.overnight else "No" }}</td>
+              <td>{{ p.amount }} {{ p.currency }}</td>
+              <td><span class="badge {{ p.status.value }}">{{ p.status.value }}</span></td>
+              <td>{{ p.created_at }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="muted">No payments yet.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

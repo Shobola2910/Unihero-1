@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="cards">
+  <div class="card"><div class="label">Pending</div><div class="value">{{ counts.pending }}</div></div>
+  <div class="card"><div class="label">Approved</div><div class="value">{{ counts.approved }}</div></div>
+  <div class="card"><div class="label">Total</div><div class="value">{{ counts.total }}</div></div>
+</section>
+
+<section>
+  <h2>Pending Users</h2>
+  <table id="pending-table">
+    <thead>
+      <tr>
+        <th>tg_id</th><th>Name</th><th>@username</th><th>Phone</th><th>Student ID</th><th>Approve</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+<script>
+  async function loadPending() {
+    const res = await fetch('/users?approved=false');
+    const data = await res.json();
+    const tb = document.querySelector('#pending-table tbody');
+    tb.innerHTML = '';
+    for (const u of data) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${u.tg_id}</td>
+        <td>${(u.first_name||'') + ' ' + (u.last_name||'')}</td>
+        <td>@${u.username||''}</td>
+        <td>${u.phone||''}</td>
+        <td>${u.student_id||''}</td>
+        <td><button data-tg="${u.tg_id}">Approve</button></td>`;
+      tb.appendChild(tr);
+    }
+    tb.querySelectorAll('button[data-tg]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const tg = btn.getAttribute('data-tg');
+        const resp = await fetch('/users/approve', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({tg_id: Number(tg)})
+        });
+        if (resp.ok) loadPending();
+      });
+    });
+  }
+  loadPending();
+</script>
+{% endblock %}

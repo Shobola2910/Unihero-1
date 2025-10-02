@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h3>Payments</h3>
+  <table class="tbl">
+    <thead>
+      <tr><th>ID</th><th>User</th><th>Plan</th><th>Overnight</th><th>Amount</th><th>Curr</th><th>Receipt</th><th>Status</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+    {% for p in items %}
+      <tr>
+        <td>{{ p.id }}</td>
+        <td>#{{ p.user_id }}</td>
+        <td>{{ p.plan.value }}</td>
+        <td>{{ "✅" if p.overnight else "—" }}</td>
+        <td>{{ p.amount }}</td>
+        <td>{{ p.currency }}</td>
+        <td>
+          {% if p.receipt_file_name %} {{ p.receipt_file_name }} {% else %} — {% endif %}
+        </td>
+        <td><span class="badge">{{ p.status.value }}</span></td>
+        <td>
+          <form method="post" action="/admin/payments/set-status" class="inline">
+            <input type="hidden" name="payment_id" value="{{ p.id }}">
+            <select name="status">
+              {% for st in ['approved','pending','rejected'] %}
+              <option value="{{ st }}" {% if p.status.value==st %}selected{% endif %}>{{ st }}</option>
+              {% endfor %}
+            </select>
+            <button class="btn sm" type="submit">Save</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

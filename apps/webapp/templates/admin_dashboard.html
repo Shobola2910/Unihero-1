@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        #dashboard {
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .summary {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .summary div {
+            text-align: center;
+            background-color: #e7f5e7;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        canvas {
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div id="dashboard">
+        <h1>Admin Dashboard</h1>
+        <div class="summary">
+            <div>
+                <h3>Users</h3>
+                <p>{{ users_total }}</p>
+            </div>
+            <div>
+                <h3>Payments</h3>
+                <p>{{ payments_total }}</p>
+            </div>
+        </div>
+        <canvas id="userChart"></canvas>
+        <script>
+            var ctx = document.getElementById('userChart').getContext('2d');
+            var userChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Users', 'Payments'],
+                    datasets: [{
+                        label: 'Count',
+                        data: [{{ users_total }} , {{ payments_total }}],
+                        backgroundColor: ['#4caf50', '#ff9800'],
+                        borderColor: ['#388e3c', '#f57c00'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>

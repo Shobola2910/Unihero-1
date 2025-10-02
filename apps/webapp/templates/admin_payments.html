@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="page-title">Payments</h2>
+<div class="table">
+  <div class="tr head">
+    <div>ID</div><div>User</div><div>Plan</div><div>Amount</div><div>Status</div><div>Created</div>
+  </div>
+  {% for p in rows %}
+    <div class="tr">
+      <div>{{ p.id }}</div>
+      <div>{{ p.user_id }}</div>
+      <div>{{ p.plan or "-" }}</div>
+      <div>{{ p.amount }} {{ p.currency or "" }}</div>
+      <div>{{ p.status or "-" }}</div>
+      <div>{{ p.created_at or "-" }}</div>
+    </div>
+  {% else %}
+    <div class="empty">No payments yet.</div>
+  {% endfor %}
+</div>
+{% endblock %}

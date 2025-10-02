@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="page-title">Inline blocks</h2>
+<div class="table">
+  <div class="tr head">
+    <div>ID</div><div>Key</div><div>Lang</div><div>Updated</div>
+  </div>
+  {% for b in rows %}
+    <div class="tr">
+      <div>{{ b.id }}</div>
+      <div>{{ b.key }}</div>
+      <div>{{ b.lang }}</div>
+      <div>{{ b.updated_at or "-" }}</div>
+    </div>
+  {% else %}
+    <div class="empty">No blocks yet.</div>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,124 @@
+:root{
+  --bg:#021024;           /* very dark blue */
+  --surface:#052659;      /* side & nav */
+  --surface-2:#0A3A73;    /* cards header */
+  --muted:#5A8893;        /* muted text */
+  --primary:#7DA0CA;      /* accents */
+  --accent:#C1E8FF;       /* bright */
+  --text:#EAF3FA;         /* main text */
+  --radius:16px;
+  --shadow:0 8px 24px rgba(0,0,0,.25);
+  --border:1px solid rgba(255,255,255,.08);
+  font-synthesis-weight: none;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  color:var(--text);
+  font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+}
+
+/* gradient bg */
+.bg{
+  background: linear-gradient(180deg,#031a3a, var(--bg));
+}
+
+/* layout */
+.sidebar{
+  position:fixed; inset:0 auto 0 0; width:240px;
+  background:var(--surface);
+  padding:20px;
+  box-shadow: var(--shadow);
+  display:flex; flex-direction:column; gap:12px;
+}
+.brand{font-weight:700; letter-spacing:.4px}
+.nav{display:flex; flex-direction:column; gap:8px; height:100%}
+.nav .grow{flex:1}
+.nav-link{
+  display:block; padding:10px 12px; border-radius:12px;
+  text-decoration:none; color:var(--text);
+  border:var(--border);
+  background:rgba(255,255,255,.02);
+}
+.nav-link:hover{background:rgba(255,255,255,.06)}
+.nav-link.danger{background:rgba(255,40,40,.08); border-color:rgba(255,40,40,.2)}
+
+.content{
+  margin-left:260px;
+  padding:28px;
+  min-height:100vh;
+}
+
+/* cards & grid */
+.h1{margin:0 0 16px; font-size:22px; font-weight:700}
+.grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
+  gap:16px;
+}
+.card{
+  background: rgba(255,255,255,.04);
+  border: var(--border);
+  border-radius: var(--radius);
+  padding:16px;
+  box-shadow: var(--shadow);
+}
+.card-title{color:var(--muted); font-weight:600; margin-bottom:8px}
+.stat{font-size:28px; font-weight:800}
+
+/* table */
+.table-wrap{background:rgba(255,255,255,.04); border:var(--border); border-radius:var(--radius); overflow:auto; box-shadow:var(--shadow)}
+.table{width:100%; border-collapse: collapse; min-width:900px}
+.table th, .table td{padding:12px 14px; border-bottom:1px solid rgba(255,255,255,.06)}
+.table thead th{background:rgba(255,255,255,.06); text-align:left; font-size:13px}
+.table tbody tr:hover{background:rgba(255,255,255,.04)}
+.empty{text-align:center; padding:20px; color:var(--muted)}
+
+/* badges */
+.badge{
+  display:inline-block; padding:5px 10px; border-radius:999px; font-weight:700; font-size:12px;
+  background:rgba(255,255,255,.08); border:var(--border)
+}
+.badge.pending{background:rgba(255,200,0,.12); border-color:rgba(255,200,0,.3)}
+.badge.approved{background:rgba(0,210,120,.12); border-color:rgba(0,210,120,.3)}
+.badge.rejected{background:rgba(255,60,60,.12); border-color:rgba(255,60,60,.3)}
+
+/* buttons */
+.btn-primary,.btn-secondary{
+  display:inline-flex; align-items:center; gap:8px; padding:10px 14px; 
+  border-radius:12px; text-decoration:none; cursor:pointer; border:var(--border);
+}
+.btn-primary{background:linear-gradient(180deg,var(--primary),#4f78a8); color:#051222; font-weight:800}
+.btn-primary:hover{filter:brightness(1.05)}
+.btn-secondary{background:rgba(255,255,255,.06); color:var(--text)}
+.btn-secondary:hover{background:rgba(255,255,255,.1)}
+.row-between{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px}
+.muted{color:var(--muted)}
+
+/* list */
+.list{list-style:none; margin:10px 0 0; padding:0}
+.list-item{padding:12px 14px; border-bottom:1px solid rgba(255,255,255,.06)}
+.list-title{font-weight:700}
+.list-sub{color:var(--muted); font-size:12px}
+
+/* login */
+.login-bg{
+  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  background: radial-gradient(1200px 600px at 50% -10%, var(--accent), transparent),
+              linear-gradient(180deg,#0a2c58, var(--bg));
+}
+.login-card{
+  width:360px; background:rgba(255,255,255,.06);
+  border:var(--border); border-radius:20px; padding:22px;
+  box-shadow: var(--shadow);
+}
+.login-head{font-weight:800; font-size:20px; margin-bottom:10px}
+.login-form{display:flex; flex-direction:column; gap:10px}
+.login-form input{
+  background:rgba(0,0,0,.25); border:1px solid rgba(255,255,255,.2); color:var(--text);
+  outline:none; padding:10px 12px; border-radius:12px;
+}
+.alert{background:rgba(255,70,70,.15); border:1px solid rgba(255,70,70,.35); padding:8px 10px; border-radius:12px}
+.hint{margin-top:8px; color:var(--muted); font-size:12px}
